@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+		
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+		<!-- 데이터베이스 연결 정보를 읽어올 properties 파일 위치 설정 -->
+	<context:property-placeholder location="classpath:mybatis/config.properties" />
+	
+	<!-- sqlSessionTemplate 빈 등록 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<!-- sqlSessionFactoryBean 빈 등록 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- basicDataSource 빈 등록 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.dev.driver}"/>
+		<property name="url" value="${jdbc.dev.url}"/>
+		<property name="username" value="${jdbc.dev.username}"/>
+		<property name="password" value="${jdbc.dev.password}"/>
+		<property name="defaultAutoCommit" value="false"/>
+	</bean>
+	
+	<!-- 매퍼 인터페이스 스캔 -->
+	<mybatis:scan base-package="com.multi.tmate"/>
+</beans>
