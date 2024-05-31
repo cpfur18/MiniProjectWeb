@@ -12,7 +12,6 @@
 		
    <typeAliases>
       <typeAlias type="com.multi.tmate.member.model.dto.MemberDTO" alias="memberDTO"></typeAlias>
-
    </typeAliases>
 
 </configuration>

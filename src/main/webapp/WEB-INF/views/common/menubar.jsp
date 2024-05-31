@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/resources/css/headers.css">
 </head>
 <body>
+	<c:set var="context" value="${ pageContext.servletContext.contextPath }"/>
 	<div class="container-fluid">
 	    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 	      <div class="col-md-3 mb-2 mb-md-0">
@@ -22,21 +23,29 @@
 	      </div>
 	
 	      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-	        <li><a href="${ pageContext.servletContext.contextPath}" class="nav-link px-2 link-secondary">Home</a></li>
-	        <li><a href="${ pageContext.servletContext.contextPath}/reservation" class="nav-link px-2">Reservation</a></li>
-	        <li><a href="${ pageContext.servletContext.contextPath}/community" class="nav-link px-2">Community</a></li>
-	        <li><a href="${ pageContext.servletContext.contextPath}/faq" class="nav-link px-2">FAQs</a></li>
-	        <li><a href="${ pageContext.servletContext.contextPath}/about" class="nav-link px-2">About</a></li>
+	        <li><a href="<c:out value='${ context }'/>" class="nav-link px-2 link-secondary">Home</a></li>
+	        <li><a href="<c:out value='${ context }'/>/reservation" class="nav-link px-2">Reservation</a></li>
+	        <li><a href="<c:out value='${ context }'/>/community" class="nav-link px-2">Community</a></li>
+	        <li><a href="<c:out value='${ context }'/>/faq" class="nav-link px-2">FAQs</a></li>
+	        <li><a href="<c:out value='${ context }'/>/about" class="nav-link px-2">About</a></li>
 	      </ul>
 	
 	      <div class="col-md-3 text-end">
 	       <c:if test="${ empty loginMember }">
-	        <button type="button" onclick="location.href='${ pageContext.servletContext.contextPath}/member/login';" class="btn btn-outline-primary me-2">Login</button>
-	        <button type="button" onclick="location.href='${ pageContext.servletContext.contextPath}/member/insert';" class="btn btn-primary">Sign-up</button>
+	        <button type="button" onclick="location.href='<c:out value='${ context }'/>/member/login';" class="btn btn-outline-primary me-2">Login</button>
+	        <button type="button" onclick="location.href='<c:out value='${ context }'/>/member/insert';" class="btn btn-primary">Sign-up</button>
 	       </c:if>
 	       
 	       <c:if test="${ !empty loginMember }">
-	        <button type="button" onclick="location.href='${ servletContext.contextPath}/member/logout';" class="btn btn-outline-primary me-2">Logout</button>
+		     <c:choose>
+	       		<c:when test="${ loginMember.id eq 'admin' }">
+		       		<button type="button" onclick="location.href='<c:out value='${ context }'/>/admin';" class="btn btn-outline-primary me-2">Admin</button>
+		       	</c:when>
+		       	<c:otherwise>
+		       		<button type="button" onclick="location.href='<c:out value='${ context }'/>/member/mypage';" class="btn btn-outline-primary me-2">MyPage</button>
+		       	</c:otherwise>   
+			 </c:choose>
+			<button type="button" onclick="location.href='<c:out value='${ context }'/>/member/logout';" class="btn btn-outline-primary me-2">Logout</button>
 	       </c:if>
 	      </div>
 	    </header>

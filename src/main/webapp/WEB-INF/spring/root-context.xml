@@ -9,7 +9,7 @@
 		
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-		<!-- 데이터베이스 연결 정보를 읽어올 properties 파일 위치 설정 -->
+	<!-- 데이터베이스 연결 정보를 읽어올 properties 파일 위치 설정 -->
 	<context:property-placeholder location="classpath:mybatis/config.properties" />
 	
 	<!-- sqlSessionTemplate 빈 등록 -->
@@ -19,11 +19,11 @@
 	
 	<!-- sqlSessionFactoryBean 빈 등록 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- basicDataSource 빈 등록 -->
+	<!-- 데이터베이스 풀 구현 및 빈 등록 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${jdbc.dev.driver}"/>
 		<property name="url" value="${jdbc.dev.url}"/>
@@ -33,5 +33,8 @@
 	</bean>
 	
 	<!-- 매퍼 인터페이스 스캔 -->
-	<mybatis:scan base-package="com.multi.tmate"/>
+	<mybatis:scan base-package="com.multi.tmate.member.model.mapper"/>
+	<mybatis:scan base-package="com.multi.tmate.board.model.mapper"/>
+	<mybatis:scan base-package="com.multi.tmate.notice.model.mapper"/>
+	<mybatis:scan base-package="com.multi.tmate.reservation.model.mapper"/>
 </beans>
